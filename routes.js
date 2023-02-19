@@ -1,7 +1,7 @@
     const fs = require("fs");
     
     const requestHandler=(req,res)=>{
-    console.log("working");
+    console.log("working12");
     const url = req.url;
     const method = req.method;
     if(url==='/'){
