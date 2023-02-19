@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-complete-guide",
+  "version": "1.0.0",
+  "description": "node js complete guide",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harisjaved1996/nodejs-complete-guide.git"
+  },
+  "author": "Haris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harisjaved1996/nodejs-complete-guide/issues"
+  },
+  "homepage": "https://github.com/harisjaved1996/nodejs-complete-guide#readme"
+}
