@@ -1,6 +1,7 @@
     const fs = require("fs");
     
     const requestHandler=(req,res)=>{
+    console.log("working");
     const url = req.url;
     const method = req.method;
     if(url==='/'){
@@ -15,7 +16,6 @@
     if(url === '/message' && method === "POST"){
         const body= [];
         req.on("data",(chunk)=>{
-            console.log("working data");
             body.push(chunk);
         });
         req.on('end', () => {

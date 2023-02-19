@@ -9,3 +9,9 @@ and jo special keywords hte han node js ke andar like "start" un ke lye hume "ru
 
 so , inshort jo commands npm "command-name" se na chale but npm run "command-name" se chal jae wo custom commands hte han.
 ####
+
+####
+npm install <dependenciesname> --save-dev mean ke package just uss project ke lye install kiya gya han and ye package only development par chle ga . production par nahi.
+
+agr hum global keyword ke sath dependency install kare ge to wo hmare globally machine par install ho jae ge.
+####
