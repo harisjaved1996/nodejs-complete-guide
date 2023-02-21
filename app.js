@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const path = require("path");
+const rootDir = require("./util/path");
 
 // body parsing
 const bodyParser=require("body-parser");
@@ -16,7 +18,8 @@ app.use(shopRoutes);
 
 // handling 404 page
 app.use((req,res,next)=>{
-    res.status(404).send("<h1>Page not found</h1>");
+    // console.log(path.join(rootDir, 'views', '404.html'));
+    res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
 });
 
 
