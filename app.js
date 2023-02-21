@@ -1,12 +1,23 @@
 const express = require("express");
 const app = express();
 
+// body parsing
+const bodyParser=require("body-parser");
+app.use(bodyParser.urlencoded({extended:true}));
+
+
+// Routes
+app.use("/add-product",(req,res,next)=>{
+    res.send("<form method='POST' action='/product'><input type='text' name='title'/><input type='submit' value='submit'/></form>");
+});
+
 app.use("/product",(req,res,next)=>{
-    res.send("<h1>this is product page</h1>");
+    console.log(req.body);
+    res.redirect("/");
 });
 
 app.use("/",(req,res,next)=>{
-    res.send("<h1>This is default call</h1>");
+    res.send("<h1>Hello From Express</h1>");
 });
 
 // creating server
