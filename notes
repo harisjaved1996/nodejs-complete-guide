@@ -20,3 +20,12 @@ agr hum global keyword ke sath dependency install kare ge to wo hmare globally m
 next()
 Allows the request to continue to the next method in the line
 ###
+
+
+###
+app.use
+By this all type of requests can come i.e post , get
+
+app.post / app.get
+By this only that  type of requests can come whose method is post / get
+###
