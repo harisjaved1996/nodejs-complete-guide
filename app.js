@@ -5,20 +5,21 @@ const app = express();
 const bodyParser=require("body-parser");
 app.use(bodyParser.urlencoded({extended:true}));
 
+// admin routes
+const adminRoutes = require("./routes/admin");
+// shop routes
+const shopRoutes = require("./routes/shop");
 
-// Routes
-app.use("/add-product",(req,res,next)=>{
-    res.send("<form method='POST' action='/product'><input type='text' name='title'/><input type='submit' value='submit'/></form>");
+
+app.use(adminRoutes);
+app.use(shopRoutes);
+
+// handling 404 page
+app.use((req,res,next)=>{
+    res.status(404).send("<h1>Page not found</h1>");
 });
 
-app.post("/product",(req,res,next)=>{
-    console.log(req.body);
-    res.redirect("/");
-});
 
-app.use("/",(req,res,next)=>{
-    res.send("<h1>Hello From Express</h1>");
-});
 
 // creating server
 app.listen(3000);
