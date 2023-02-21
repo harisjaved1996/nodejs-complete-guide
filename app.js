@@ -10,8 +10,8 @@ const adminRoutes = require("./routes/admin");
 // shop routes
 const shopRoutes = require("./routes/shop");
 
-
-app.use(adminRoutes);
+// routes which start with /admin will execute line 14  and then will not conside /admin
+app.use("/admin",adminRoutes);
 app.use(shopRoutes);
 
 // handling 404 page
