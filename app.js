@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
-app.use((req, res, next) => {
-    console.log("haris1");
-    next(); // Allows the request to continue to the next middleware in the line
+
+app.use("/product",(req,res,next)=>{
+    res.send("<h1>this is product page</h1>");
 });
 
-app.use((req, res, next) => {
-    console.log("haris2");
-    res.send("<h1>This is  working absolutely fine</h1>");
+app.use("/",(req,res,next)=>{
+    res.send("<h1>This is default call</h1>");
 });
 
+// creating server
 app.listen(3000);
