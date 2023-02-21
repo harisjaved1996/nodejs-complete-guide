@@ -1,17 +1,13 @@
-const http = require("http");
 const express = require("express");
 const app = express();
-app.use((req,res,next)=>{
-    console.log("1st middleware is working");
+app.use((req, res, next) => {
+    console.log("haris1");
     next(); // Allows the request to continue to the next middleware in the line
 });
 
-app.use((req,res,next)=>{
-    console.log("2nd middleware is working");
-    res.send("<h1>This is working absolutely fine</h1>");
-    next();
+app.use((req, res, next) => {
+    console.log("haris2");
+    res.send("<h1>This is  working absolutely fine</h1>");
 });
-// const routes =  require('./routes');
-// const server = http.createServer(routes);
-const server = http.createServer(app);
-server.listen(3000);
+
+app.listen(3000);
