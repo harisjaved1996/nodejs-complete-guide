@@ -14,12 +14,12 @@ app.use(express.static(path.join(rootDir,'public')));
 
 // ########################### Routes ################################
 // admin routes
-const adminRoutes = require("./routes/admin");
+const adminData = require("./routes/admin");
 // shop routes
 const shopRoutes = require("./routes/shop");
 
 // routes which start with /admin will execute line 14  and then will not conside /admin
-app.use("/admin",adminRoutes);
+app.use("/admin",adminData.routes);
 app.use(shopRoutes);
 
 // handling 404 page
