@@ -1,5 +1,11 @@
 const express = require("express");
 const app = express();
+
+// pug templating engine
+app.set('view engine', 'pug');
+app.set('views', 'views');
+// 
+
 const path = require("path");
 const rootDir = require("./util/path");
 
@@ -8,8 +14,6 @@ const bodyParser=require("body-parser");
 app.use(bodyParser.urlencoded({extended:true}));
 
 // static File
-console.log(__dirname);
-console.log(rootDir);
 app.use(express.static(path.join(rootDir,'public')));
 
 // ########################### Routes ################################
