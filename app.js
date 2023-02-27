@@ -7,6 +7,12 @@ const rootDir = require("./util/path");
 const bodyParser=require("body-parser");
 app.use(bodyParser.urlencoded({extended:true}));
 
+// static File
+console.log(__dirname);
+console.log(rootDir);
+app.use(express.static(path.join(rootDir,'public')));
+
+// ########################### Routes ################################
 // admin routes
 const adminRoutes = require("./routes/admin");
 // shop routes
