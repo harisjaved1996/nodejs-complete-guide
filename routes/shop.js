@@ -6,10 +6,10 @@ const path = require("path");
 const rootDir = require("../util/path");
 
 router.get("/",(req,res,next)=>{
-    // console.log(adminData.products);
-    // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-    console.log("working fine pug");
-    res.render('shop');
+    res.render('shop',{
+        prods:adminData.products,
+        docTitle:"Shop"
+    });
 });
 
 module.exports = router;
