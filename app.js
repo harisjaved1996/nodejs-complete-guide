@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 
-// pug templating engine
-app.set('view engine', 'pug');
+//Templating engine
+app.set('view engine', 'ejs');
 app.set('views', 'views');
 // 
 
