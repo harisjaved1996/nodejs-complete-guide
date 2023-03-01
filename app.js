@@ -18,18 +18,19 @@ app.use(express.static(path.join(rootDir,'public')));
 
 // ########################### Routes ################################
 // admin routes
-const adminData = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 // shop routes
 const shopRoutes = require("./routes/shop");
 
 // routes which start with /admin will execute line 14  and then will not conside /admin
-app.use("/admin",adminData.routes);
+app.use("/admin",adminRoutes);
 app.use(shopRoutes);
 
 // handling 404 page
 app.use((req,res,next)=>{
     res.status(404).render("404",{
-        pageTitle:"Page Not Found"
+        path:"404",
+        pageTitle:"Page Not Found",
     });
 });
 
