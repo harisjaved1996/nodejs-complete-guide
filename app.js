@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(path.join(rootDir,'public')));
 
 // ########################### Routes ################################
+
+
 // admin routes
 const adminRoutes = require("./routes/admin");
 // shop routes
@@ -24,6 +26,12 @@ const shopRoutes = require("./routes/shop");
 
 const errorController = require("./controllers/error");
 
+// Database
+const db = require('./util/database');
+
+db.execute('select * from products').then((result)=>{
+    console.log(result[0]);
+}).catch(error=>console.log(error));
 // routes which start with /admin will execute line 14  and then will not conside /admin
 app.use("/admin",adminRoutes);
 app.use(shopRoutes);
@@ -34,4 +42,4 @@ app.use(errorController.get404);
 
 
 // creating server
-app.listen(3000);
+app.listen(3001);
