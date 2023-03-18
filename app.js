@@ -26,12 +26,6 @@ const shopRoutes = require("./routes/shop");
 
 const errorController = require("./controllers/error");
 
-// Database
-const db = require('./util/database');
-
-db.execute('select * from products').then((result)=>{
-    console.log(result[0]);
-}).catch(error=>console.log(error));
 // routes which start with /admin will execute line 14  and then will not conside /admin
 app.use("/admin",adminRoutes);
 app.use(shopRoutes);
