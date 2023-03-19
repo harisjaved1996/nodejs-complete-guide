@@ -2,9 +2,10 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll().then((result)=>{
+  Product.findAll().then((result)=>{
+    console.log("GET Products CALLING");
     res.render('shop/product-list', {
-      prods: result[0],
+      prods: result,
       pageTitle: 'All Products',
       path: '/products'
     });
@@ -31,10 +32,11 @@ exports.postCartDeleteProduct = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId).then(([product])=>{
+  Product.findByPk(prodId).then((result)=>{
+    console.log("Product Found");
     res.render('shop/product-detail', {
-      product: product[0],
-      pageTitle: product[0].title,
+      product: result,
+      pageTitle: result.title,
       path: '/products'
     });
   }).catch((error)=>{
@@ -44,9 +46,10 @@ exports.getProduct = (req, res, next) => {
 
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll().then((result)=>{
+  Product.findAll().then((result)=>{
+    console.log("GET INDEX CALLING");
     res.render('shop/index', {
-      prods: result[0],
+      prods: result,
       pageTitle: 'Shop',
       path: '/'
     });

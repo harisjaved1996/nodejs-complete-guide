@@ -26,6 +26,10 @@ const shopRoutes = require("./routes/shop");
 
 const errorController = require("./controllers/error");
 
+const sequelize = require('./util/database');
+const Product = require('./models/product');
+const User = require('./models/user');
+
 // routes which start with /admin will execute line 14  and then will not conside /admin
 app.use("/admin",adminRoutes);
 app.use(shopRoutes);
@@ -33,7 +37,13 @@ app.use(shopRoutes);
 // handling 404 page
 app.use(errorController.get404);
 
-
-
-// creating server
-app.listen(3001);
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+sequelize
+// .sync({ force: true }).then(result => {
+.sync().then(result => {
+    // console.log(result);
+    app.listen(3001);}
+    ) .catch(err => {
+    console.log("not created",err);
+});
