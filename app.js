@@ -29,6 +29,8 @@ const errorController = require("./controllers/error");
 const sequelize = require('./util/database');
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 
 app.use((req, res, next) => {
@@ -46,10 +48,14 @@ app.use(shopRoutes);
 // handling 404 page
 app.use(errorController.get404);
 
-// line 41 means if a user delete then all the products related to user will also delete
+// products means if a user delete then all the products related to user will also delete
+// Associations
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
-
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 // .sync({ force: true }).then(result => {
 sequelize.sync().then(result => {
     // console.log(result);
