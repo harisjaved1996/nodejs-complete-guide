@@ -66,6 +66,9 @@ sequelize.sync().then(result => {
         }
         return user;
     }).then(user=>{
+        // console.log("user 01",user)
+        return user.createCart();
+    }).then(cart=>{
         app.listen(3001);
     }).catch(err => {
     console.log("not created",err);
