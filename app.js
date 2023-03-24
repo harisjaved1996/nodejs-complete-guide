@@ -32,7 +32,7 @@ const User = require('./models/user');
 
 
 app.use((req, res, next) => {
-    User.findById(1)
+    User.findByPk(1)
       .then(user => {
         req.user = user;
         next();
@@ -46,7 +46,7 @@ app.use(shopRoutes);
 // handling 404 page
 app.use(errorController.get404);
 
-// line 41 means if a user delete and all the products related to user will also delete
+// line 41 means if a user delete then all the products related to user will also delete
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 
