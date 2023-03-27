@@ -24,15 +24,15 @@ const errorController = require("./controllers/error");
 const {mongoConnect} = require('./util/database');
 
 
-app.use((req, res, next) => {
-    // User.findByPk(1)
-    //   .then(user => {
-    //     req.user = user;
-    //     next();
-    //   })
-    //   .catch(err => console.log(err));
-    next();
-  });
+// app.use((req, res, next) => {
+//     User.findByPk(1)
+//       .then(user => {
+//         req.user = user;
+//         next();
+//       })
+//       .catch(err => console.log(err));
+//     next();
+//   });
 // routes which start with /admin will execute line 14  and then will not conside /admin
 app.use("/admin",adminRoutes);
 app.use(shopRoutes);

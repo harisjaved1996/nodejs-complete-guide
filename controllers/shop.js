@@ -66,10 +66,9 @@ exports.postCartDeleteProduct = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  console.log("poka");
   const prodId = req.params.productId;
+  console.log(prodId);
   Product.findById(prodId).then((result)=>{
-    console.log("Product Found");
     res.render('shop/product-detail', {
       product: result,
       pageTitle: result.title,
