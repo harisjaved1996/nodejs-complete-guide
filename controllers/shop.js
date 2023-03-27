@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll().then((result)=>{
+  Product.fetchAll().then((result)=>{
     console.log("GET Products CALLING");
     res.render('shop/product-list', {
       prods: result,
@@ -81,7 +81,7 @@ exports.getProduct = (req, res, next) => {
 
 
 exports.getIndex = (req, res, next) => {
-  Product.findAll().then((result)=>{
+  Product.fetchAll().then((result)=>{
     console.log("GET INDEX CALLING");
     res.render('shop/index', {
       prods: result,

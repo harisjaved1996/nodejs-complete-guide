@@ -19,7 +19,7 @@ app.use(express.static(path.join(rootDir,'public')));
 // admin routes
 const adminRoutes = require("./routes/admin");
 // shop routes
-// const shopRoutes = require("./routes/shop");
+const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 const {mongoConnect} = require('./util/database');
 
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   });
 // routes which start with /admin will execute line 14  and then will not conside /admin
 app.use("/admin",adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 // handling 404 page
 app.use(errorController.get404);
