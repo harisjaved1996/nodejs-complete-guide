@@ -39,10 +39,6 @@ app.use(shopRoutes);
 
 // handling 404 page
 app.use(errorController.get404);
-mongoConnect(client => {
-  console.log("App Started")
-    app.listen(3001);
-});
 mongoConnect((client) => {
   console.log('App Connected');
   app.listen(3000);

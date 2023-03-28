@@ -67,7 +67,6 @@ exports.postCartDeleteProduct = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  console.log(prodId);
   Product.findById(prodId).then((result)=>{
     res.render('shop/product-detail', {
       product: result,
