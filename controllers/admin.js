@@ -1,5 +1,7 @@
 
 const Product = require('../models/product');
+const mongodb = require('mongodb');
+const ObjectId = mongodb.ObjectId;
 exports.getAddPorduct=(req,res,next)=>{
   res.render('admin/edit-product', {
       pageTitle: 'Add Product',
@@ -14,8 +16,7 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  // Product.findByPk(prodId).then((result)=>{
-    req.user.getProducts({ where: { id: prodId } }).then((result)=>{
+  Product.findById(prodId).then((result)=>{
     console.log("result found by id")
     if (!result) {
       return res.redirect('/');
@@ -34,11 +35,12 @@ exports.getEditProduct = (req, res, next) => {
 
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
-  const price = req.body.price;
-  const description = req.body.description;
-  const product = new Product(title, price, description, imageUrl);
+  // const prodId = req.body.productId;
+  const updatedTitle = req.body.title;
+  const updatedPrice = req.body.price;
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedDesc = req.body.description;
+  const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImageUrl );
   product.save().then(result => {
       // console.log(result);
       console.log('Created Product');
@@ -55,13 +57,8 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  Product.update(
-    {title:updatedTitle, price:updatedPrice, imageUrl:updatedImageUrl, description:updatedDesc},{
-    where: {
-      id: prodId
-    }
-  }
-  ).then((result)=>{
+  const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImageUrl, new ObjectId(prodId));
+  product.save().then((result)=>{
     console.log("product updated successfully");
     res.redirect('/admin/products');
   }).catch((error)=>{
@@ -72,6 +69,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts=(req,res,next)=>{
   Product.fetchAll().then((result)=>{
+    console.log(result);
     res.render('admin/products', {
       prods: result,
       pageTitle: 'Admin Products',
