@@ -80,12 +80,8 @@ exports.getProducts=(req,res,next)=>{
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.destroy({
-    where: {
-      id: prodId
-    }
-  }).then(()=>{
-    console.log("product Deleted");
+  Product.deleteById(prodId).then(()=>{
+    console.log("product Deleted in controller");
     res.redirect('/admin/products');
   }).catch((error)=>{
     console.log(error);
