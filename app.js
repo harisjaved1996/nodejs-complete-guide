@@ -22,17 +22,16 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 const {mongoConnect} = require('./util/database');
+const user = require("./models/user");
 
-
-// app.use((req, res, next) => {
-//     User.findByPk(1)
-//       .then(user => {
-//         req.user = user;
-//         next();
-//       })
-//       .catch(err => console.log(err));
-//     next();
-//   });
+app.use((req, res, next) => {
+  user.findById('6423e0f3d7a5d8cef5e54154').then(user => {
+    console.log("user Data", user);
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
 // routes which start with /admin will execute line 14  and then will not conside /admin
 app.use("/admin",adminRoutes);
 app.use(shopRoutes);
