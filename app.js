@@ -25,7 +25,7 @@ const {mongoConnect} = require('./util/database');
 const user = require("./models/user");
 
 app.use((req, res, next) => {
-  user.findById('6423e0f3d7a5d8cef5e54154').then(user => {
+  user.findById('6423fdddd7a5d8cef5e54155').then(user => {
     console.log("user Data", user);
       req.user = user;
       next();
