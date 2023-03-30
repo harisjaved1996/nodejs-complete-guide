@@ -22,12 +22,12 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 const {mongoConnect} = require('./util/database');
-const user = require("./models/user");
+const User = require("./models/user");
 
 app.use((req, res, next) => {
-  user.findById('6423fdddd7a5d8cef5e54155').then(user => {
-    console.log("user Data", user);
-      req.user = user;
+  User.findById('6423fdddd7a5d8cef5e54155').then(user => {
+      req.user = new User(user.username, user.email, user.cart, user._id);
+      console.log("req user",req.user);
       next();
     })
     .catch(err => console.log(err));
