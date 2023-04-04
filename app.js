@@ -21,7 +21,7 @@ const adminRoutes = require("./routes/admin");
 // shop routes
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
-const {mongoConnect} = require('./util/database');
+const mongoose = require('mongoose');
 const User = require("./models/user");
 
 app.use((req, res, next) => {
@@ -38,8 +38,15 @@ app.use(shopRoutes);
 
 // handling 404 page
 app.use(errorController.get404);
-mongoConnect((client) => {
-  console.log('App Connected');
+mongoose.connect('mongodb://127.0.0.1:27017/ecom').then(result=>{
+  console.log("app connected with database");
   app.listen(3000);
-});
+}).catch(error=>{
+  console.log("app did not connect with the mongodb",error);
+})
+
+/*
+  mongodb+srv://mharisjaved1996:drG8sdOfPtmVXcXW@cluster0.vrmyxzc.mongodb.net/?retryWrites=true&w=majority
+  mongodb://127.0.0.1:27017/ecom
+*/ 
 
