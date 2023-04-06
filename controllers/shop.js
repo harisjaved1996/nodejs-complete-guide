@@ -2,7 +2,7 @@ const Product = require('../models/product');
 const User    = require('../models/user');
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll().then((result)=>{
+  Product.find().then((result)=>{
     console.log("GET Products CALLING");
     res.render('shop/product-list', {
       prods: result,
@@ -51,7 +51,7 @@ exports.getProduct = (req, res, next) => {
 
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll().then((result)=>{
+  Product.find().then((result)=>{
     console.log("GET INDEX CALLING");
     res.render('shop/index', {
       prods: result,
