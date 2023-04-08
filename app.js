@@ -21,12 +21,12 @@ const adminRoutes = require("./routes/admin");
 // shop routes
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
-const {mongoConnect} = require('./util/database');
+const mongoose = require('mongoose');
 const User = require("./models/user");
 
 app.use((req, res, next) => {
-  User.findById('6425fb41164e9a7868aad29f').then(user => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
+  User.findById('642f0a5a8723761433b4ede2').then(user => {
+      req.user = user;
       console.log("req user",req.user);
       next();
     })
@@ -38,8 +38,28 @@ app.use(shopRoutes);
 
 // handling 404 page
 app.use(errorController.get404);
-mongoConnect((client) => {
-  console.log('App Connected');
+mongoose.connect('mongodb://127.0.0.1:27017/shop').then(result=>{
+  console.log("app connected with database");
+  User.findOne().then(user=>{
+    console.log(user);
+    if(!user){
+      const user = new User({
+        name:'haris',
+        email:'haris@yahoo.com',
+        cart: {
+          items:[]
+        }
+      });
+      user.save();
+    }
+  });
   app.listen(3000);
-});
+}).catch(error=>{
+  console.log("app did not connect with the mongodb",error);
+})
+
+/*
+  mongodb+srv://mharisjaved1996:drG8sdOfPtmVXcXW@cluster0.vrmyxzc.mongodb.net/?retryWrites=true&w=majority
+  mongodb://127.0.0.1:27017/ecom
+*/ 
 
