@@ -1,44 +1,56 @@
-const express = require("express");
+const path = require('path');
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const errorController = require('./controllers/error');
+const User = require('./models/user');
+
+const MONGODB_URI = 'mongodb://127.0.0.1:27017/shop';
+
 const app = express();
-//Templating engine
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const path = require("path");
-const rootDir = require("./util/path");
-// body parsing
-const bodyParser=require("body-parser");
-app.use(bodyParser.urlencoded({extended:true}));
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
 
-// static File
-app.use(express.static(path.join(rootDir,'public')));
-
-// ########################### Routes ################################
-
-
-// admin routes
-const adminRoutes = require("./routes/admin");
-// shop routes
-const shopRoutes = require("./routes/shop");
-const authRoutes = require("./routes/auth");
-const errorController = require("./controllers/error");
-const mongoose = require('mongoose');
-const User = require("./models/user");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store:store
+  })
+);
 
 app.use((req, res, next) => {
-  User.findById('642f0a5a8723761433b4ede2').then(user => {
+  User.findById('642f0a5a8723761433b4ede2')
+    .then(user => {
       req.user = user;
-      console.log("req user",req.user);
+      console.log("request user",req.user);
       next();
     })
     .catch(err => console.log(err));
 });
-// routes which start with /admin will execute line 14  and then will not conside /admin
-app.use("/admin",adminRoutes);
+
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
-// handling 404 page
+
 app.use(errorController.get404);
+
 mongoose.connect('mongodb://127.0.0.1:27017/shop').then(result=>{
   console.log("app connected with database");
   User.findOne().then(user=>{
@@ -59,8 +71,4 @@ mongoose.connect('mongodb://127.0.0.1:27017/shop').then(result=>{
   console.log("app did not connect with the mongodb",error);
 })
 
-/*
-  mongodb+srv://mharisjaved1996:drG8sdOfPtmVXcXW@cluster0.vrmyxzc.mongodb.net/?retryWrites=true&w=majority
-  mongodb://127.0.0.1:27017/ecom
-*/ 
 
