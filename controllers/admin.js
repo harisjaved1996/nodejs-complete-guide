@@ -5,6 +5,7 @@ exports.getAddPorduct=(req,res,next)=>{
       pageTitle: 'Add Product',
       editing: false,
       path: '/admin/add-product',
+      isAuthenticated: req.isLoggedIn
   });
 };
 
@@ -23,7 +24,8 @@ exports.getEditProduct = (req, res, next) => {
       pageTitle: 'Edit Product',
       path: '/admin/edit-product',
       editing: editMode,
-      product: result
+      product: result,
+      isAuthenticated: req.isLoggedIn
     });
   }).catch((error)=>{
     console.log(error);
@@ -49,6 +51,7 @@ exports.postAddProduct = (req, res, next) => {
       // console.log(result);
       console.log('Created Product');
       res.redirect('/admin/products');
+      isAuthenticated: req.isLoggedIn
     })
     .catch(err => {
       console.log(err);
@@ -70,6 +73,7 @@ exports.postEditProduct = (req, res, next) => {
   }).then((result)=>{
     console.log("product updated successfully");
     res.redirect('/admin/products');
+    isAuthenticated: req.isLoggedIn;
   }).catch((error)=>{
     console.log(error);
   });
@@ -85,7 +89,8 @@ exports.getProducts=(req,res,next)=>{
     res.render('admin/products', {
       prods: result,
       pageTitle: 'Admin Products',
-      path: '/admin/products'
+      path: '/admin/products',
+      isAuthenticated: req.isLoggedIn
     });
   }).catch((error)=>{
     console.log(error);
@@ -97,6 +102,7 @@ exports.postDeleteProduct = (req, res, next) => {
   Product.findByIdAndRemove(prodId).then(()=>{
     console.log("product Deleted in controller");
     res.redirect('/admin/products');
+    isAuthenticated: req.isLoggedIn
   }).catch((error)=>{
     console.log(error);
   });
