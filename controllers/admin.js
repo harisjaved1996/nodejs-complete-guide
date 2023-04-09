@@ -5,7 +5,7 @@ exports.getAddPorduct=(req,res,next)=>{
       pageTitle: 'Add Product',
       editing: false,
       path: '/admin/add-product',
-      isAuthenticated: req.isLoggedIn
+      isAuthenticated: req.session.isLoggedIn
   });
 };
 
@@ -25,7 +25,7 @@ exports.getEditProduct = (req, res, next) => {
       path: '/admin/edit-product',
       editing: editMode,
       product: result,
-      isAuthenticated: req.isLoggedIn
+      isAuthenticated: req.sesion.isLoggedIn
     });
   }).catch((error)=>{
     console.log(error);
@@ -45,13 +45,12 @@ exports.postAddProduct = (req, res, next) => {
     price:price,
     description:description,
     imageUrl:imageUrl,
-    userId:req.user
+    userId:req.session.user
   });
   product.save().then(result => {
       // console.log(result);
       console.log('Created Product');
       res.redirect('/admin/products');
-      isAuthenticated: req.isLoggedIn
     })
     .catch(err => {
       console.log(err);
@@ -73,7 +72,6 @@ exports.postEditProduct = (req, res, next) => {
   }).then((result)=>{
     console.log("product updated successfully");
     res.redirect('/admin/products');
-    isAuthenticated: req.isLoggedIn;
   }).catch((error)=>{
     console.log(error);
   });
@@ -90,7 +88,7 @@ exports.getProducts=(req,res,next)=>{
       prods: result,
       pageTitle: 'Admin Products',
       path: '/admin/products',
-      isAuthenticated: req.isLoggedIn
+      isAuthenticated: req.session.isLoggedIn
     });
   }).catch((error)=>{
     console.log(error);
@@ -102,7 +100,6 @@ exports.postDeleteProduct = (req, res, next) => {
   Product.findByIdAndRemove(prodId).then(()=>{
     console.log("product Deleted in controller");
     res.redirect('/admin/products');
-    isAuthenticated: req.isLoggedIn
   }).catch((error)=>{
     console.log(error);
   });
