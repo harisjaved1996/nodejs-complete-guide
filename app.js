@@ -55,19 +55,6 @@ app.use(errorController.get404);
 
 mongoose.connect('mongodb://127.0.0.1:27017/shop').then(result=>{
   console.log("app connected with database");
-  User.findOne().then(user=>{
-    console.log(user);
-    if(!user){
-      const user = new User({
-        name:'haris',
-        email:'haris@yahoo.com',
-        cart: {
-          items:[]
-        }
-      });
-      user.save();
-    }
-  });
   app.listen(3000);
 }).catch(error=>{
   console.log("app did not connect with the mongodb",error);
