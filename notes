@@ -35,4 +35,10 @@ By this only that  type of requests can come whose method is post / get
 <!-- # Mongoose is a object Document Mapping -->
 <!-- CSRF => cross site request forgery -->
 <!-- # node version 18.14.0 -->
+============Pending==========:
+-Adding Validation for forms
+- Csrf Token
+
+============Packages==========:
+connect-flash => used to show the flash messsage
 
