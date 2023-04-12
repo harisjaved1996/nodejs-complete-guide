@@ -1,5 +1,28 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+// for mail
+const nodemailer = require('nodemailer');
+// const sendgridTransport = require('nodemailer-sendgrid-transport');
+
+// const transporter = nodemailer.createTransport(
+//   sendgridTransport({
+//     auth: {
+//       api_key:
+//         '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'
+//     }
+//   })
+// );
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'mharis.javed1996@gmail.com',
+    pass: 'mwyutswkopcbqifb'
+  }
+});
+
+
+
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
@@ -84,6 +107,28 @@ exports.postSignup = (req, res, next) => {
         })
         .then(result => {
           res.redirect('/login');
+          // const mailOptions = {
+          //   from: 'mharis.javed1996@gmail.com',
+          //   to: 'mharis.javed1996@gmail.com',
+          //   subject: 'Sending Email using Node.js',
+          //   text: 'That was easy!'
+          // };
+          
+          // transporter.sendMail(mailOptions, function(error, info){
+          //   if (error) {
+          //     console.log(error);
+          //   } else {
+          //     console.log('Email sent: ' + info.response);
+          //   }
+          // });
+          return transporter.sendMail({
+            to: email,
+            from: 'shop@node-complete.com',
+            subject: 'Signup succeeded!',
+            html: '<h1>You successfully signed up!</h1>'
+          });
+        }).catch(err => {
+          console.log(err);
         });
     })
     .catch(err => {
