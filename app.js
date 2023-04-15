@@ -36,6 +36,7 @@ app.use(
   })
 );
 
+// using for flash message
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -48,6 +49,12 @@ app.use((req, res, next) => {
       next();
     })
     .catch(err => console.log(err));
+});
+
+// in this way isAuthenticated request will be added in the response for all incoming request
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  next();
 });
 
 app.use('/admin', adminRoutes);
