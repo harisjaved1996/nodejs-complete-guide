@@ -88,7 +88,6 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors.array());
@@ -98,52 +97,42 @@ exports.postSignup = (req, res, next) => {
       errorMessage: errors.array()[0].msg
     });
   }
-  User.findOne({ email: email })
-    .then(userDoc => {
-      if (userDoc) {
-        req.flash('error', 'Email Already Exist , Please Choose a different One');
-        return res.redirect('/signup');
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then(hashedPassword => {
-          const user = new User({
-            email: email,
-            password: hashedPassword,
-            cart: { items: [] }
-          });
-          return user.save();
-        })
-        .then(result => {
-          res.redirect('/login');
-          // const mailOptions = {
-          //   from: 'mharis.javed1996@gmail.com',
-          //   to: 'mharis.javed1996@gmail.com',
-          //   subject: 'Sending Email using Node.js',
-          //   text: 'That was easy!'
-          // };
-          
-          // transporter.sendMail(mailOptions, function(error, info){
-          //   if (error) {
-          //     console.log(error);
-          //   } else {
-          //     console.log('Email sent: ' + info.response);
-          //   }
-          // });
-          return transporter.sendMail({
-            to: email,
-            from: 'shop@node-complete.com',
-            subject: 'Signup succeeded!',
-            html: '<h1>You successfully signed up!</h1>'
-          });
-        }).catch(err => {
-          console.log(err);
-        });
-    })
-    .catch(err => {
+
+  bcrypt.hash(password, 12)
+    .then(hashedPassword => {
+      const user = new User({
+        email: email,
+        password: hashedPassword,
+        cart: { items: [] }
+      });
+      return user.save();
+  }).then(result => {
+      res.redirect('/login');
+      // const mailOptions = {
+      //   from: 'mharis.javed1996@gmail.com',
+      //   to: 'mharis.javed1996@gmail.com',
+      //   subject: 'Sending Email using Node.js',
+      //   text: 'That was easy!'
+      // };
+      
+      // transporter.sendMail(mailOptions, function(error, info){
+      //   if (error) {
+      //     console.log(error);
+      //   } else {
+      //     console.log('Email sent: ' + info.response);
+      //   }
+      // });
+      return transporter.sendMail({
+        to: email,
+        from: 'shop@node-complete.com',
+        subject: 'Signup succeeded!',
+        html: '<h1>You successfully signed up!</h1>'
+      });
+  }).catch(err => {
       console.log(err);
-    });
+  });
 };
+    
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
