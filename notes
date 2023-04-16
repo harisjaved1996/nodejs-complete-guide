@@ -41,4 +41,5 @@ By this only that  type of requests can come whose method is post / get
 
 ============Packages==========:
 connect-flash => used to show the flash messsage
+express-validator => used for validating
 
