@@ -61,6 +61,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
+app.use(errorController.get500);
 app.use(errorController.get404);
 
 mongoose.connect('mongodb://127.0.0.1:27017/shop').then(result=>{
